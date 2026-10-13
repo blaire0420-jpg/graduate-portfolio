@@ -57,3 +57,21 @@ This analysis focuses on school environment indicators and does not directly mea
 Factors such as school size, school type, local population, and socioeconomic characteristics may also influence regional differences.
 
 Therefore, the results should be interpreted as descriptive patterns rather than causal effects.
+
+## Visualizations
+
+### Students per Teacher by City
+
+![Students per Teacher by City](city_comparison.png)
+
+### Class Size by City
+
+![Class Size by City](class_size_by_city.png)
+
+### Class Size vs Students per Teacher
+
+![Class Size vs Students per Teacher](class_size_vs_teacher_ratio.png)
+
+### Public vs Private Schools
+
+![Public vs Private Schools](school_type_comparison.png)
