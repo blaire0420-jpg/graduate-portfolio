@@ -10,6 +10,11 @@ data = {
 
 df = pd.DataFrame(data)
 
+
+
+print("\n=== Data Cleaning Report ===")
+print(f"Original rows: {len(df)}")
+print(f"Missing values before cleaning: {df.isnull().sum().sum()}")
 print("=== Original Data ===")
 print(df)
 
@@ -26,7 +31,14 @@ df["attendance"] = df["attendance"].fillna(
 )
 
 # 4. 중복 행 제거
+rows_before = len(df)
 df = df.drop_duplicates()
+rows_after = len(df)
+
+print("\n=== Duplicate Removal Report ===")
+print(f"Rows before removing duplicates: {rows_before}")
+print(f"Rows after removing duplicates: {rows_after}")
+print(f"Duplicate rows removed: {rows_before - rows_after}")
 
 # 5. 정리된 데이터 확인
 print("\n=== Cleaned Data ===")
