@@ -1,5 +1,8 @@
 import pandas as pd
 
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, r2_score
 # 학생 성적 데이터 생성 (연습용 가상 데이터)
 data = {
     "study_hours": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -50,8 +53,6 @@ plt.grid(True)
 plt.savefig("study_hours_vs_scores.png")
 plt.show()
 
-from sklearn.linear_model import LinearRegression
-
 # 1. 학습 데이터 준비
 X = df[["study_hours"]]
 y = df["exam_score"]
@@ -60,7 +61,20 @@ y = df["exam_score"]
 model = LinearRegression()
 
 # 3. 데이터 학습
-model.fit(X, y)
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Predict scores for unseen test data
+predicted_scores = model.predict(X_test)
+
+# Evaluate the model
+mae = mean_absolute_error(y_test, predicted_scores)
+r2 = r2_score(y_test, predicted_scores)
 
 # 4. 하루 7.5시간 공부했을 때 점수 예측
 new_data = pd.DataFrame({"study_hours": [7.5]})
@@ -114,13 +128,33 @@ plt.show()
 
 from sklearn.metrics import mean_absolute_error, r2_score
 
-# Model evaluation
-predicted_scores = model.predict(X)
 
-mae = mean_absolute_error(y, predicted_scores)
-r2 = r2_score(y, predicted_scores)
+# Model evaluation on unseen test data
+predicted_scores = model.predict(X_test)
 
-print("\nModel Evaluation")
+mae = mean_absolute_error(y_test, predicted_scores)
+r2 = r2_score(y_test, predicted_scores)
+
+print("\nTest Set Evaluation")
 print(f"Mean Absolute Error (MAE): {mae:.2f}")
 print(f"R-squared (R2): {r2:.4f}")
 
+# Compare actual and predicted scores on the test set
+plt.figure(figsize=(8, 6))
+
+plt.scatter(y_test, predicted_scores)
+
+plt.plot(
+    [min(y_test), max(y_test)],
+    [min(y_test), max(y_test)],
+    color="red",
+    linestyle="--"
+)
+
+plt.xlabel("Actual Scores")
+plt.ylabel("Predicted Scores")
+plt.title("Actual vs Predicted Scores (Test Set)")
+plt.grid(True)
+
+plt.savefig("actual_vs_predicted.png")
+plt.show()

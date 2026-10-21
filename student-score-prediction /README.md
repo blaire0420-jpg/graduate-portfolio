@@ -33,13 +33,15 @@ Input: Study hours
 
 Target: Exam score
 
-## Results
-- Predicted score for 7.5 study hours: 78.55
-- Mean Absolute Error (MAE): 0.93
-- R-squared (R2): 0.9929
 
-Evaluation was performed on the training data.
-Results do not represent performance on unseen data.
+## Results
+- Predicted score for 7.5 study hours: 78.90
+- Mean Absolute Error (MAE): 1.36
+- R-squared (R2): 0.9927
+
+Evaluation was performed on a held-out test set (20% of the data).
+Due to the small dataset size, the evaluation metrics may vary significantly.
+
 
 ## Visualizations
 
@@ -48,6 +50,10 @@ Results do not represent performance on unseen data.
 
 ### Machine Learning Prediction
 ![Prediction](machine_learning_prediction.png)
+
+### Actual vs Predicted Scores
+
+![Actual vs Predicted Scores](actual_vs_predicted.png)
 
 ## Future Improvements
 - Use real-world educational datasets
