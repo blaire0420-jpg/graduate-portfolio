@@ -1,0 +1,74 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from pathlib import Path
+
+OUTPUT_DIR = Path(__file__).resolve().parent
+
+# Sample student performance data
+data = {
+    "study_hours": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "attendance": [60, 65, 70, 75, 80, 85, 90, 92, 95, 98],
+    "assignment_score": [50, 55, 60, 65, 70, 75, 80, 85, 90, 95],
+    "exam_score": [45, 50, 55, 60, 65, 70, 75, 80, 85, 95]
+}
+
+df = pd.DataFrame(data)
+
+# 1. Distribution of exam scores
+plt.figure(figsize=(8, 5))
+plt.hist(df["exam_score"], bins=5, edgecolor="black")
+plt.title("Distribution of Exam Scores")
+plt.xlabel("Exam Score")
+plt.ylabel("Number of Students")
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "exam_score_distribution.png")
+plt.show()
+plt.close()
+
+# 2. Study hours vs exam scores
+plt.figure(figsize=(8, 5))
+plt.scatter(df["study_hours"], df["exam_score"])
+plt.title("Study Hours vs Exam Scores")
+plt.xlabel("Study Hours")
+plt.ylabel("Exam Score")
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "study_hours_vs_exam_scores.png")
+plt.show()
+plt.close()
+
+# 3. Correlation heatmap
+correlation = df.corr()
+
+plt.figure(figsize=(8, 6))
+plt.imshow(correlation, vmin=-1, vmax=1, aspect="auto")
+plt.colorbar(label="Correlation")
+
+plt.xticks(
+    range(len(correlation.columns)),
+    correlation.columns,
+    rotation=45,
+    ha="right"
+)
+plt.yticks(
+    range(len(correlation.columns)),
+    correlation.columns
+)
+
+for i in range(len(correlation.columns)):
+    for j in range(len(correlation.columns)):
+        plt.text(
+            j,
+            i,
+            f"{correlation.iloc[i, j]:.2f}",
+            ha="center",
+            va="center"
+        )
+
+plt.title("Student Performance Correlation Heatmap")
+plt.tight_layout()
+plt.savefig(OUTPUT_DIR / "correlation_heatmap.png")
+plt.show()
+plt.close()
+
+print("All visualizations created successfully!")
+print(f"Output folder: {OUTPUT_DIR}")
